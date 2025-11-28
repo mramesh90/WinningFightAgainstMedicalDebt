@@ -25,7 +25,6 @@ async def main():
     # Setup logging
     setup_logging(log_level="INFO", log_to_file=True, log_dir="logs")
 
-    logger.info("=" * 80)
     logger.info("MEDICAL BILL PROCESSING SYSTEM - PRODUCTION VERSION")
     logger.info("Using Google ADK Agents (Agent, ParallelAgent, SequentialAgent)")
     logger.info("=" * 80)
