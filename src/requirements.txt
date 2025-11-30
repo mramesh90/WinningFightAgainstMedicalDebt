@@ -3,3 +3,5 @@ reportlab
 pdf2image
 pillow
 PyMuPDF
+sqlalchemy
+aiosqlite
