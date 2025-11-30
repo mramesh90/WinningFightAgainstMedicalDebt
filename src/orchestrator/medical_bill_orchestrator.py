@@ -35,6 +35,9 @@ class MedicalBillOrchestrator:
     """
 
     def __init__(self):
+        """
+        Initialize Medical Bill Orchestrator.
+        """
         logger.info("🔧 Initializing Medical Bill Orchestrator...")
 
         # Initialize Governing Agent

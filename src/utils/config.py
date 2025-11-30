@@ -18,11 +18,19 @@ class Config:
     DEFAULT_MODEL = "gemini-2.5-flash-lite"
     TEMPERATURE = 0.1
 
-    # Poppler Configuration (Windows)
-    POPPLER_BIN_PATH = r"C:\Ramesh\Software\poppler-windows\Release-25.11.0-0\poppler-25.11.0\Library\bin"
+    # Poppler Configuration
+    POPPLER_BIN_PATH = os.getenv("POPPLER_BIN_PATH")
 
     # File Paths
     BILLS_DIR = "bills"
+
+    # Session Configuration
+    DATABASE_URL = os.getenv("DATABASE_URL", "sqlite+aiosqlite:///medical_bill_agent_data.db")
+    APP_NAME = "medical_bill_processing"
+
+    # Events Compaction Configuration
+    COMPACTION_INTERVAL = 3  # Trigger compaction every 3 invocations
+    OVERLAP_SIZE = 1  # Keep 1 previous turn for context
 
     @classmethod
     def validate(cls):
@@ -31,5 +39,8 @@ class Config:
             logger.error("GOOGLE_API_KEY environment variable not set.")
             raise ValueError("GOOGLE_API_KEY environment variable not set.")
         logger.info("✅ Configuration validated successfully.")
+        logger.info(f"   Database: {cls.DATABASE_URL}")
+        logger.info(f"   App Name: {cls.APP_NAME}")
+        logger.info(f"   Compaction Interval: {cls.COMPACTION_INTERVAL}")
         return True
 

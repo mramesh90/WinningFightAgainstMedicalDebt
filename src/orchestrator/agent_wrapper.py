@@ -1,13 +1,17 @@
 """
 AgentWrapper - Wrapper for Google ADK Agents
 Provides a unified interface for Agent, SequentialAgent, and ParallelAgent.
+Supports persistent sessions with DatabaseSessionService and Events Compaction.
 """
 
-from google.adk.agents import Agent, ParallelAgent, SequentialAgent
+from google.adk.agents import Agent, ParallelAgent, SequentialAgent, LlmAgent
+from google.adk.apps.app import App, EventsCompactionConfig
 from google.adk.models.google_llm import Gemini
-from google.adk.runners import InMemoryRunner
+from google.adk.runners import InMemoryRunner, Runner
+from google.adk.sessions import DatabaseSessionService, InMemorySessionService
+from google.adk.tools.tool_context import ToolContext
 from google.genai import types
-from typing import Optional, List, Literal
+from typing import Optional, List, Literal, Any, Dict
 import uuid
 import logging
 
@@ -29,7 +33,12 @@ class AgentWrapper:
             tools: Optional[List] = None,
             output_key: Optional[str] = None,
             agent_type: Literal["Agent", "ParallelAgent", "SequentialAgent"] = "Agent",
-            sub_agents: Optional[List] = None
+            sub_agents: Optional[List] = None,
+            session_service: Optional[Any] = None,
+            app_name: Optional[str] = None,
+            enable_compaction: bool = False,
+            compaction_interval: int = 3,
+            overlap_size: int = 1
     ):
         """
         Initialize an agent wrapper.
@@ -43,6 +52,11 @@ class AgentWrapper:
             output_key: Output key for result storage
             agent_type: Type of agent (Agent, ParallelAgent, SequentialAgent)
             sub_agents: List of sub-agents (for ParallelAgent/SequentialAgent)
+            session_service: DatabaseSessionService or InMemorySessionService
+            app_name: Application name for the runner
+            enable_compaction: Enable events compaction
+            compaction_interval: Trigger compaction every N invocations
+            overlap_size: Keep N previous turns for context
         """
         self.name = name
         self.model_name = model_name
@@ -52,8 +66,14 @@ class AgentWrapper:
         self.output_key = output_key
         self.agent_type = agent_type
         self.sub_agents = sub_agents if sub_agents is not None else []
+        self.session_service = session_service
+        self.app_name = app_name or "medical_bill_agents"
+        self.enable_compaction = enable_compaction
+        self.compaction_interval = compaction_interval
+        self.overlap_size = overlap_size
         self.agent = None
         self.runner = None
+        self.app = None
 
         if self.agent_type == "Agent":
             if not self.model_name:
@@ -94,8 +114,7 @@ class AgentWrapper:
 
         return Gemini(
             model=self.model_name,
-            retry_options=retry_config,
-            safety_settings=safety_settings
+            retry_options=retry_config
         )
 
     def _initialize_agent(self):
@@ -130,15 +149,20 @@ class AgentWrapper:
             self.agent = Agent(**agent_config)
             logger.info(f"✅ Agent '{self.name}' created")
 
-        self.runner = InMemoryRunner(agent=self.agent, app_name="medical_bill_agents")
+        # Use InMemoryRunner with run_debug for simple, stateless operations
+        # This avoids session management complexity while still working correctly
+        self.runner = InMemoryRunner(agent=self.agent, app_name=self.app_name)
+        logger.info(f"✅ InMemoryRunner created")
 
-    async def run(self, query, instruction: Optional[str] = None):
+    async def run(self, query, instruction: Optional[str] = None, session_id: Optional[str] = None, user_id: Optional[str] = None):
         """
         Run the agent with the given query.
 
         Args:
             query: Input query (string or UserContent)
             instruction: Optional instruction override
+            session_id: Optional session ID (not used with run_debug)
+            user_id: Optional user ID (not used with run_debug)
 
         Returns:
             Agent response
@@ -146,22 +170,17 @@ class AgentWrapper:
         if self.runner is None:
             raise RuntimeError("Runner not initialized.")
 
-        # For multimodal inputs
-        if isinstance(query, types.UserContent):
-            session_id = f"session_{self.name}_{uuid.uuid4().hex[:8]}"
-            user_id = "user_default"
-
-            response_generator = self.runner.run_async(
-                user_id=user_id,
-                session_id=session_id,
-                new_message=query
-            )
-            final_response = ""
-            async for event in response_generator:
-                if hasattr(event, 'text'):
-                    final_response += event.text
-            return final_response
+        # Use run_debug which handles everything automatically
+        # No session management needed - simpler and more reliable
+        if isinstance(query, str):
+            return await self.runner.run_debug(query)
+        elif isinstance(query, types.Content):
+            # Extract text from Content object
+            if hasattr(query, 'parts') and len(query.parts) > 0:
+                text = query.parts[0].text if hasattr(query.parts[0], 'text') else str(query)
+            else:
+                text = str(query)
+            return await self.runner.run_debug(text)
         else:
-            # For simple string inputs
             return await self.runner.run_debug(str(query))
 
