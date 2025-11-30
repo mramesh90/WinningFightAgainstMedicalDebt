@@ -32,11 +32,6 @@
 - [Configuration](#configuration)
 - [Usage](#usage)
 - [Architecture](#architecture)
-- [Testing](#testing)
-- [Project Structure](#project-structure)
-- [API Reference](#api-reference)
-- [Troubleshooting](#troubleshooting)
-- [Contributing](#contributing)
 
 ---
 
@@ -223,6 +218,7 @@ Bill PDF
 ```
 
 ---
+
 
 
 
