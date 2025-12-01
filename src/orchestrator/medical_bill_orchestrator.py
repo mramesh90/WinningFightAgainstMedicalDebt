@@ -8,14 +8,8 @@ from pathlib import Path
 from typing import Union
 from .agent_wrapper import AgentWrapper
 
-from agents import (
-    BillExtractionAgent,
-    ChargeExtractionAgent,
-    DuplicateChargesAuditor,
-    WrongCodesAuditor,
-    ChargeExplainer,
-    GoverningAgent
-)
+from src.agents import GoverningAgent, BillExtractionAgent, ChargeExtractionAgent, DuplicateChargesAuditor, \
+    WrongCodesAuditor, ChargeExplainer
 
 logger = logging.getLogger(__name__)
 

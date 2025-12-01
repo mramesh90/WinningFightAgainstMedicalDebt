@@ -5,14 +5,11 @@ Supports persistent sessions with DatabaseSessionService and Events Compaction.
 """
 
 from google.adk.agents import Agent, ParallelAgent, SequentialAgent, LlmAgent
-from google.adk.apps.app import App, EventsCompactionConfig
 from google.adk.models.google_llm import Gemini
 from google.adk.runners import InMemoryRunner, Runner
-from google.adk.sessions import DatabaseSessionService, InMemorySessionService
-from google.adk.tools.tool_context import ToolContext
+
 from google.genai import types
 from typing import Optional, List, Literal, Any, Dict
-import uuid
 import logging
 
 logger = logging.getLogger(__name__)
