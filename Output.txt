@@ -1,0 +1,1391 @@
+C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\.venv\Scripts\python.exe C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\main.py 
+2025-12-01 16:59:19 - root - INFO - 📝 Logging to file: logs\medical_bill_20251201_165919.log
+2025-12-01 16:59:19 - root - INFO - ✅ Logging configured successfully
+2025-12-01 16:59:19 - __main__ - INFO - MEDICAL BILL PROCESSING 
+2025-12-01 16:59:19 - utils.config - INFO - ✅ Configuration validated successfully.
+2025-12-01 16:59:19 - utils.config - INFO -    Database: sqlite+aiosqlite:///medical_bill_agent_data.db
+2025-12-01 16:59:19 - utils.config - INFO -    App Name: medical_bill_processing
+2025-12-01 16:59:19 - utils.config - INFO -    Compaction Interval: 3
+
+📋 Setting up Shared Session Service...
+2025-12-01 16:59:19 - google_adk.google.adk.sessions.database_session_service - INFO - Local timezone: Europe/Paris
+✅ DatabaseSessionService created: sqlite+aiosqlite:///medical_bill_agent_data.db
+✅ Using shared session: bill-analysis-session
+   All agents will write to this session, chatbot will read from it!
+PART 1: BILL PROCESSING (Writing to Session)
+2025-12-01 16:59:19 - __main__ - INFO - INITIALIZING ORCHESTRATOR
+2025-12-01 16:59:19 - orchestrator.medical_bill_orchestrator - INFO - 🔧 Initializing Medical Bill Orchestrator...
+2025-12-01 16:59:19 - src.agents.governing_agent - INFO - ✅ GoverningAgent initialized
+2025-12-01 16:59:20 - src.agents.bill_extraction - INFO - ✅ BillExtractionAgent initialized
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ Agent 'ChargeExtractionAgent' created
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ InMemoryRunner created
+2025-12-01 16:59:20 - src.agents.charge_extraction - INFO - ✅ ChargeExtractionAgent initialized with Google ADK Agent
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ Agent 'DuplicateChargesAuditor' created
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ InMemoryRunner created
+2025-12-01 16:59:20 - src.agents.duplicate_auditor - INFO - ✅ DuplicateChargesAuditor initialized with Google ADK Agent
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ Agent 'WrongCodesAuditor' created
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ InMemoryRunner created
+2025-12-01 16:59:20 - src.agents.wrong_codes_auditor - INFO - ✅ WrongCodesAuditor initialized with Google ADK Agent
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ Agent 'ChargeExplainer' created
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ InMemoryRunner created
+2025-12-01 16:59:20 - src.agents.charge_explainer - INFO - ✅ ChargeExplainer initialized with Google ADK Agent
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ ParallelAgent 'ParallelAuditorsAndExplainer' created
+2025-12-01 16:59:20 - orchestrator.agent_wrapper - INFO - ✅ InMemoryRunner created
+2025-12-01 16:59:20 - orchestrator.medical_bill_orchestrator - INFO - ✅ Orchestrator initialized with all agents
+2025-12-01 16:59:20 - orchestrator.medical_bill_orchestrator - INFO - 🏥 STARTING MEDICAL BILL PROCESSING
+2025-12-01 16:59:20 - orchestrator.medical_bill_orchestrator - INFO - 📄 File: C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\bills\dummy_bill.pdf
+2025-12-01 16:59:20 - src.agents.governing_agent - INFO - 🚀 GoverningAgent: Workflow started at 2025-12-01 16:59:20.431394
+2025-12-01 16:59:20 - src.agents.governing_agent - INFO - ▶️ GoverningAgent: BillExtraction - STARTED 
+2025-12-01 16:59:20 - orchestrator.medical_bill_orchestrator - INFO - STAGE 1: BILL EXTRACTION
+2025-12-01 16:59:20 - src.agents.bill_extraction - INFO - 🔍 BillExtractionAgent: Starting extraction from C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\bills\dummy_bill.pdf
+2025-12-01 16:59:21 - utils.image_utils - INFO - ✅ Successfully converted PDF: C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\bills\dummy_bill.pdf
+2025-12-01 16:59:22 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:23 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:23 - src.agents.bill_extraction - INFO - ✅ BillExtractionAgent: Extraction complete (942 chars)
+2025-12-01 16:59:23 - src.agents.governing_agent - INFO - ✅ GoverningAgent: BillExtraction - SUCCESS (942 chars)
+2025-12-01 16:59:23 - src.agents.governing_agent - INFO - ▶️ GoverningAgent: ChargeExtraction - STARTED 
+2025-12-01 16:59:23 - orchestrator.medical_bill_orchestrator - INFO - STAGE 2: CHARGE & CODE EXTRACTION
+2025-12-01 16:59:23 - src.agents.charge_extraction - INFO - 🔍 ChargeExtractionAgent: Starting charge extraction
+
+ ### Created new session: debug_session_id
+
+User > {
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "line_items": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount_charged": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount_charged": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount_charged": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount_charged": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount_charged": 25.00
+    }
+  ],
+  "total_amount": 2000.00
+}
+2025-12-01 16:59:24 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:24 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:26 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:26 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+ChargeExtractionAgent > ```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00
+}
+```
+2025-12-01 16:59:26 - src.agents.charge_extraction - INFO - ✅ ChargeExtractionAgent: Extraction complete
+2025-12-01 16:59:26 - src.agents.governing_agent - INFO - ✅ GoverningAgent: ChargeExtraction - SUCCESS 
+2025-12-01 16:59:26 - orchestrator.medical_bill_orchestrator - INFO - STAGE 3: PARALLEL AUDITING & EXPLANATION
+2025-12-01 16:59:26 - orchestrator.medical_bill_orchestrator - INFO - 🔀 Running 3 agents in parallel:
+2025-12-01 16:59:26 - orchestrator.medical_bill_orchestrator - INFO -    • Duplicate Charges Auditor
+2025-12-01 16:59:26 - orchestrator.medical_bill_orchestrator - INFO -    • Wrong Codes Auditor
+2025-12-01 16:59:26 - orchestrator.medical_bill_orchestrator - INFO -    • Charge Explainer
+2025-12-01 16:59:26 - src.agents.governing_agent - INFO - ▶️ GoverningAgent: DuplicateAuditor - STARTED 
+2025-12-01 16:59:26 - src.agents.governing_agent - INFO - ▶️ GoverningAgent: CodeAuditor - STARTED 
+2025-12-01 16:59:26 - src.agents.governing_agent - INFO - ▶️ GoverningAgent: ChargeExplainer - STARTED 
+
+ ### Created new session: debug_session_id
+
+User > [Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=401,
+  prompt_token_count=483,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=483
+    ),
+  ],
+  total_token_count=884
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-0e66f80c-5ae8-4771-9054-3db5ac7e46cc', author='ChargeExtractionAgent', actions=EventActions(skip_summarization=None, state_delta={'charges_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch=None, id='0dbbeaf0-a87d-4e2e-b408-118230da5f8c', timestamp=1764604763.956618)]
+2025-12-01 16:59:27 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:27 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:27 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:27 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:28 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:28 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:31 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:31 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+WrongCodesAuditor > ```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "code_audit": {
+    "invalid_codes": [],
+    "deprecated_codes": [],
+    "suspicious_codes": [],
+    "pricing_alerts": [
+      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."
+    ],
+    "recommendations": [
+      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",
+      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."
+    ]
+  }
+}
+```
+2025-12-01 16:59:31 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:31 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+DuplicateChargesAuditor > ```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "duplicate_audit": {
+    "duplicates_found": [
+      {
+        "index": 0,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      },
+      {
+        "index": 2,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      }
+    ],
+    "total_duplicate_amount": 1100.00,
+    "recommendations": [
+      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",
+      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it's an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."
+    ]
+  }
+}
+```
+2025-12-01 16:59:34 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:34 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+ChargeExplainer > ```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00,
+      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",
+      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",
+      "typical_cost": "$600 - $1,500",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00,
+      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",
+      "why_necessary": "To reduce inflammation and treat a medical condition.",
+      "typical_cost": "$20 - $100",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00,
+      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",
+      "why_necessary": "To collect blood samples for laboratory testing.",
+      "typical_cost": "$15 - $40",
+      "reasonableness": "Appears reasonable."
+    }
+  ],
+  "total_amount": 2000.00
+}
+```
+2025-12-01 16:59:34 - src.agents.governing_agent - INFO - ✅ GoverningAgent: DuplicateAuditor - SUCCESS 
+2025-12-01 16:59:34 - src.agents.governing_agent - INFO - ✅ GoverningAgent: CodeAuditor - SUCCESS 
+2025-12-01 16:59:34 - src.agents.governing_agent - INFO - ✅ GoverningAgent: ChargeExplainer - SUCCESS 
+2025-12-01 16:59:34 - orchestrator.medical_bill_orchestrator - INFO - ✅ BILL PROCESSING COMPLETED SUCCESSFULLY
+2025-12-01 16:59:34 - src.agents.governing_agent - INFO - ✅ GoverningAgent: Workflow completed in 13.72s
+BILL PROCESSING RESULTS
+
+📄 File: C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\bills\dummy_bill.pdf
+✅ Status: COMPLETED
+
+📊 Stages Completed: 3
+   • bill_extraction: SUCCESS
+   • charge_extraction: SUCCESS
+   • parallel_analysis: SUCCESS
+ANALYSIS OUTPUT
+[Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text='```'
+    ),
+    Part(
+      text="""json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "code_audit": {
+    "invalid_codes": [],
+    "deprecated_codes": [],
+    "suspicious_codes": [],
+    "pricing_alerts": [
+      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."
+    ],
+    "recommendations": [
+      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",
+      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."
+    ]
+  }
+}
+"""
+    ),
+    Part(
+      text='```'
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=605,
+  prompt_token_count=1483,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1483
+    ),
+  ],
+  total_token_count=2088
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='WrongCodesAuditor', actions=EventActions(skip_summarization=None, state_delta={'code_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "code_audit": {\n    "invalid_codes": [],\n    "deprecated_codes": [],\n    "suspicious_codes": [],\n    "pricing_alerts": [\n      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."\n    ],\n    "recommendations": [\n      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",\n      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.WrongCodesAuditor', id='7b4350e0-ecc5-4aa8-a9c5-9cc2bb901418', timestamp=1764604767.2869), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "duplicate_audit": {
+    "duplicates_found": [
+      {
+        "index": 0,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      },
+      {
+        "index": 2,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      }
+    ],
+    "total_duplicate_amount": 1100.00,
+    "recommendations": [
+      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",
+      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it's an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."
+    ]
+  }
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=729,
+  prompt_token_count=1422,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1422
+    ),
+  ],
+  total_token_count=2151
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='DuplicateChargesAuditor', actions=EventActions(skip_summarization=None, state_delta={'duplicate_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "duplicate_audit": {\n    "duplicates_found": [\n      {\n        "index": 0,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      },\n      {\n        "index": 2,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      }\n    ],\n    "total_duplicate_amount": 1100.00,\n    "recommendations": [\n      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",\n      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it\'s an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.DuplicateChargesAuditor', id='4e820643-94f0-4bca-9486-fe15d37522df', timestamp=1764604766.675454), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00,
+      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",
+      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",
+      "typical_cost": "$600 - $1,500",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00,
+      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",
+      "why_necessary": "To reduce inflammation and treat a medical condition.",
+      "typical_cost": "$20 - $100",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00,
+      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",
+      "why_necessary": "To collect blood samples for laboratory testing.",
+      "typical_cost": "$15 - $40",
+      "reasonableness": "Appears reasonable."
+    }
+  ],
+  "total_amount": 2000.00
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(
+  grounding_supports=[
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=813,
+        start_index=680,
+        text='The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=865,
+        start_index=814,
+        text='This charge appears to be within the average range.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        2,
+      ],
+      segment=Segment(
+        end_index=1587,
+        start_index=1414,
+        text='It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1721,
+        start_index=1588,
+        text='The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1789,
+        start_index=1722,
+        text='This charge falls within the typical cost range for this procedure.'
+      )
+    ),
+    <... 8 more items ...>,
+  ]
+), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=1171,
+  prompt_token_count=1476,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1476
+    ),
+  ],
+  total_token_count=2647
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='ChargeExplainer', actions=EventActions(skip_summarization=None, state_delta={'explained_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00,\n      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",\n      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",\n      "typical_cost": "$600 - $1,500",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00,\n      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",\n      "why_necessary": "To reduce inflammation and treat a medical condition.",\n      "typical_cost": "$20 - $100",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00,\n      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",\n      "why_necessary": "To collect blood samples for laboratory testing.",\n      "typical_cost": "$15 - $40",\n      "reasonableness": "Appears reasonable."\n    }\n  ],\n  "total_amount": 2000.00\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.ChargeExplainer', id='25ae4ff7-d1f6-4162-b8ee-913c7bed333a', timestamp=1764604767.895048)]
+
+📝 Writing bill analysis results to shared session...
+
+### Session: bill-analysis-session
+
+👤 User > I have completed analyzing a medical bill. Here are the comprehensive results:
+
+FILE INFORMATION:
+- Bill File: C:\Users\mramesh90\PycharmProjects\WinningFightAgainstMedicalDebt-main\WinningFightAgainstMedicalDebt-main\src\bills\dummy_bill.pdf
+- Processing Status: COMPLETED
+
+CHARGE EXTRACTION:
+[Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=401,
+  prompt_token_count=483,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=483
+    ),
+  ],
+  total_token_count=884
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-0e66f80c-5ae8-4771-9054-3db5ac7e46cc', author='ChargeExtractionAgent', actions=EventActions(skip_summarization=None, state_delta={'charges_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch=None, id='0dbbeaf0-a87d-4e2e-b408-118230da5f8c', timestamp=1764604763.956618)]
+
+DETAILED ANALYSIS:
+[Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text='```'
+    ),
+    Part(
+      text="""json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "code_audit": {
+    "invalid_codes": [],
+    "deprecated_codes": [],
+    "suspicious_codes": [],
+    "pricing_alerts": [
+      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."
+    ],
+    "recommendations": [
+      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",
+      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."
+    ]
+  }
+}
+"""
+    ),
+    Part(
+      text='```'
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=605,
+  prompt_token_count=1483,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1483
+    ),
+  ],
+  total_token_count=2088
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='WrongCodesAuditor', actions=EventActions(skip_summarization=None, state_delta={'code_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "code_audit": {\n    "invalid_codes": [],\n    "deprecated_codes": [],\n    "suspicious_codes": [],\n    "pricing_alerts": [\n      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."\n    ],\n    "recommendations": [\n      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",\n      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.WrongCodesAuditor', id='7b4350e0-ecc5-4aa8-a9c5-9cc2bb901418', timestamp=1764604767.2869), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "duplicate_audit": {
+    "duplicates_found": [
+      {
+        "index": 0,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      },
+      {
+        "index": 2,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      }
+    ],
+    "total_duplicate_amount": 1100.00,
+    "recommendations": [
+      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",
+      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it's an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."
+    ]
+  }
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=729,
+  prompt_token_count=1422,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1422
+    ),
+  ],
+  total_token_count=2151
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='DuplicateChargesAuditor', actions=EventActions(skip_summarization=None, state_delta={'duplicate_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "duplicate_audit": {\n    "duplicates_found": [\n      {\n        "index": 0,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      },\n      {\n        "index": 2,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      }\n    ],\n    "total_duplicate_amount": 1100.00,\n    "recommendations": [\n      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",\n      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it\'s an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.DuplicateChargesAuditor', id='4e820643-94f0-4bca-9486-fe15d37522df', timestamp=1764604766.675454), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00,
+      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",
+      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",
+      "typical_cost": "$600 - $1,500",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00,
+      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",
+      "why_necessary": "To reduce inflammation and treat a medical condition.",
+      "typical_cost": "$20 - $100",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00,
+      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",
+      "why_necessary": "To collect blood samples for laboratory testing.",
+      "typical_cost": "$15 - $40",
+      "reasonableness": "Appears reasonable."
+    }
+  ],
+  "total_amount": 2000.00
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(
+  grounding_supports=[
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=813,
+        start_index=680,
+        text='The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=865,
+        start_index=814,
+        text='This charge appears to be within the average range.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        2,
+      ],
+      segment=Segment(
+        end_index=1587,
+        start_index=1414,
+        text='It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1721,
+        start_index=1588,
+        text='The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1789,
+        start_index=1722,
+        text='This charge falls within the typical cost range for this procedure.'
+      )
+    ),
+    <... 8 more items ...>,
+  ]
+), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=1171,
+  prompt_token_count=1476,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1476
+    ),
+  ],
+  total_token_count=2647
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='ChargeExplainer', actions=EventActions(skip_summarization=None, state_delta={'explained_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00,\n      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",\n      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",\n      "typical_cost": "$600 - $1,500",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00,\n      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",\n      "why_necessary": "To reduce inflammation and treat a medical condition.",\n      "typical_cost": "$20 - $100",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00,\n      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",\n      "why_necessary": "To collect blood samples for laboratory testing.",\n      "typical_cost": "$15 - $40",\n      "reasonableness": "Appears reasonable."\n    }\n  ],\n  "total_amount": 2000.00\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.ChargeExplainer', id='25ae4ff7-d1f6-4162-b8ee-913c7bed333a', timestamp=1764604767.895048)]
+
+FINAL OUTPUT:
+[Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text='```'
+    ),
+    Part(
+      text="""json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "code_audit": {
+    "invalid_codes": [],
+    "deprecated_codes": [],
+    "suspicious_codes": [],
+    "pricing_alerts": [
+      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."
+    ],
+    "recommendations": [
+      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",
+      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."
+    ]
+  }
+}
+"""
+    ),
+    Part(
+      text='```'
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=605,
+  prompt_token_count=1483,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1483
+    ),
+  ],
+  total_token_count=2088
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='WrongCodesAuditor', actions=EventActions(skip_summarization=None, state_delta={'code_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "code_audit": {\n    "invalid_codes": [],\n    "deprecated_codes": [],\n    "suspicious_codes": [],\n    "pricing_alerts": [\n      "The charge of $550.00 for CPT code 99283 (Emergency Room Visit, Moderate Severity) appears high. Average reimbursement for this code typically ranges from $150-$300, depending on the payer and geographic location."\n    ],\n    "recommendations": [\n      "Investigate the high charge for CPT code 99283. Compare with payer fee schedules and consider if documentation supports a higher level of service or if there were unusual circumstances justifying the cost.",\n      "Verify that CPT code 36415 (Routine Venipuncture) is appropriate for the service provided. Sometimes, venipuncture is considered inclusive to other procedures and not separately billable."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.WrongCodesAuditor', id='7b4350e0-ecc5-4aa8-a9c5-9cc2bb901418', timestamp=1764604767.2869), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00
+    }
+  ],
+  "total_amount": 2000.00,
+  "duplicate_audit": {
+    "duplicates_found": [
+      {
+        "index": 0,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      },
+      {
+        "index": 2,
+        "date": "2023-10-15",
+        "cpt_code": "99283",
+        "amount": 550.00
+      }
+    ],
+    "total_duplicate_amount": 1100.00,
+    "recommendations": [
+      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",
+      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it's an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."
+    ]
+  }
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=729,
+  prompt_token_count=1422,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1422
+    ),
+  ],
+  total_token_count=2151
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='DuplicateChargesAuditor', actions=EventActions(skip_summarization=None, state_delta={'duplicate_audit_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00\n    }\n  ],\n  "total_amount": 2000.00,\n  "duplicate_audit": {\n    "duplicates_found": [\n      {\n        "index": 0,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      },\n      {\n        "index": 2,\n        "date": "2023-10-15",\n        "cpt_code": "99283",\n        "amount": 550.00\n      }\n    ],\n    "total_duplicate_amount": 1100.00,\n    "recommendations": [\n      "Review the medical necessity and documentation for the duplicate charge of CPT code 99283 on 2023-10-15 with an amount of 550.00. Investigate if this was a billing error or if two separate, justifiable services were rendered. If it was an error, adjust the billing accordingly. If two services were rendered, ensure adequate documentation supports both.",\n      "Investigate the duplicate billing of CPT code 99283 on 2023-10-15. Determine if this is an intentional overcharge or a system error. If it\'s an error, the charge should be removed or corrected. If two separate services were provided, verify sufficient documentation exists for both."\n    ]\n  }\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.DuplicateChargesAuditor', id='4e820643-94f0-4bca-9486-fe15d37522df', timestamp=1764604766.675454), Event(model_version='gemini-2.5-flash-lite', content=Content(
+  parts=[
+    Part(
+      text="""```json
+{
+  "patient_name": "John Doe",
+  "account_number": "99887766",
+  "statement_date": "2023-11-01",
+  "provider_name": "GENERAL CITY HOSPITAL",
+  "charges": [
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "CT Scan Head or Brain",
+      "cpt_code": "70450",
+      "amount": 800.00,
+      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",
+      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",
+      "typical_cost": "$600 - $1,500",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Emergency Room Visit, Mod Severity",
+      "cpt_code": "99283",
+      "amount": 550.00,
+      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",
+      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",
+      "typical_cost": "$350 - $800",
+      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Injection, Dexamethasone",
+      "cpt_code": "J1100",
+      "amount": 45.00,
+      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",
+      "why_necessary": "To reduce inflammation and treat a medical condition.",
+      "typical_cost": "$20 - $100",
+      "reasonableness": "Appears reasonable."
+    },
+    {
+      "date": "2023-10-15",
+      "description": "Routine Venipuncture",
+      "cpt_code": "36415",
+      "amount": 25.00,
+      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",
+      "why_necessary": "To collect blood samples for laboratory testing.",
+      "typical_cost": "$15 - $40",
+      "reasonableness": "Appears reasonable."
+    }
+  ],
+  "total_amount": 2000.00
+}
+```"""
+    ),
+  ],
+  role='model'
+), grounding_metadata=GroundingMetadata(
+  grounding_supports=[
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=813,
+        start_index=680,
+        text='The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        0,
+        1,
+      ],
+      segment=Segment(
+        end_index=865,
+        start_index=814,
+        text='This charge appears to be within the average range.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        2,
+      ],
+      segment=Segment(
+        end_index=1587,
+        start_index=1414,
+        text='It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1721,
+        start_index=1588,
+        text='The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used.'
+      )
+    ),
+    GroundingSupport(
+      grounding_chunk_indices=[
+        3,
+      ],
+      segment=Segment(
+        end_index=1789,
+        start_index=1722,
+        text='This charge falls within the typical cost range for this procedure.'
+      )
+    ),
+    <... 8 more items ...>,
+  ]
+), partial=None, turn_complete=None, finish_reason=<FinishReason.STOP: 'STOP'>, error_code=None, error_message=None, interrupted=None, custom_metadata=None, usage_metadata=GenerateContentResponseUsageMetadata(
+  candidates_token_count=1171,
+  prompt_token_count=1476,
+  prompt_tokens_details=[
+    ModalityTokenCount(
+      modality=<MediaModality.TEXT: 'TEXT'>,
+      token_count=1476
+    ),
+  ],
+  total_token_count=2647
+), live_session_resumption_update=None, input_transcription=None, output_transcription=None, avg_logprobs=None, logprobs_result=None, cache_metadata=None, citation_metadata=None, invocation_id='e-9e0fd8d9-a892-4f94-aac0-bd54bb89eb64', author='ChargeExplainer', actions=EventActions(skip_summarization=None, state_delta={'explained_data': '```json\n{\n  "patient_name": "John Doe",\n  "account_number": "99887766",\n  "statement_date": "2023-11-01",\n  "provider_name": "GENERAL CITY HOSPITAL",\n  "charges": [\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a charge for an emergency room visit where your condition was assessed as moderately severe. This means a doctor or other healthcare professional evaluated your symptoms and determined they required immediate attention but were not life-threatening. This service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800, depending on the facility and services provided. This charge appears to be within the average range.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "CT Scan Head or Brain",\n      "cpt_code": "70450",\n      "amount": 800.00,\n      "plain_english_description": "This is a charge for a CT (Computed Tomography) scan of your head or brain. This imaging test uses X-rays to create detailed cross-sectional pictures of your head and brain. It was likely ordered to help diagnose the cause of your symptoms, such as headaches, dizziness, or neurological changes, by providing a clear view of your brain structures. The typical cost for a CT scan of the head can range from $600 to $1,500, depending on the facility and whether contrast dye is used. This charge falls within the typical cost range for this procedure.",\n      "why_necessary": "To provide detailed images of the head and brain for diagnostic purposes.",\n      "typical_cost": "$600 - $1,500",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Emergency Room Visit, Mod Severity",\n      "cpt_code": "99283",\n      "amount": 550.00,\n      "plain_english_description": "This is a duplicate charge for an emergency room visit where your condition was assessed as moderately severe. As explained above, this service is necessary to diagnose and treat your medical issue promptly. The typical cost for this level of emergency room visit can range from $350 to $800. Please review your visit details to ensure this charge is not a duplicate.",\n      "why_necessary": "To assess and treat a moderately severe medical condition requiring immediate attention.",\n      "typical_cost": "$350 - $800",\n      "reasonableness": "Appears reasonable, but may be a duplicate charge. Please verify."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Injection, Dexamethasone",\n      "cpt_code": "J1100",\n      "amount": 45.00,\n      "plain_english_description": "This is a charge for Dexamethasone, a type of steroid medication administered via injection. Steroids are often used to reduce inflammation and swelling, which can be helpful in treating various conditions. This injection was likely given as part of your treatment plan to manage inflammation related to your condition. The cost of Dexamethasone injections can vary, but a typical charge for the medication itself might be between $20 and $100. This charge appears to be on the lower end of the typical range for the medication.",\n      "why_necessary": "To reduce inflammation and treat a medical condition.",\n      "typical_cost": "$20 - $100",\n      "reasonableness": "Appears reasonable."\n    },\n    {\n      "date": "2023-10-15",\n      "description": "Routine Venipuncture",\n      "cpt_code": "36415",\n      "amount": 25.00,\n      "plain_english_description": "This is a charge for routine venipuncture, which is the standard procedure for drawing blood from a vein. Blood samples are often taken during emergency room visits to run laboratory tests that help doctors diagnose and monitor your condition. The typical cost for a routine venipuncture can range from $15 to $40. This charge is within the expected range for this service.",\n      "why_necessary": "To collect blood samples for laboratory testing.",\n      "typical_cost": "$15 - $40",\n      "reasonableness": "Appears reasonable."\n    }\n  ],\n  "total_amount": 2000.00\n}\n```'}, artifact_delta={}, transfer_to_agent=None, escalate=None, requested_auth_configs={}, requested_tool_confirmations={}, compaction=None, end_of_agent=None, agent_state=None, rewind_before_invocation_id=None), long_running_tool_ids=None, branch='ParallelAuditorsAndExplainer.ChargeExplainer', id='25ae4ff7-d1f6-4162-b8ee-913c7bed333a', timestamp=1764604767.895048)]
+
+You can now answer any questions about this bill analysis.
+2025-12-01 16:59:34 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: medical_bill_chatbot, event id: ff8a2052-e9f9-4b1a-a553-8c6cec4c5dbe
+2025-12-01 16:59:35 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:35 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:36 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:36 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+🤖 gemini-2.5-flash-lite > The total amount on the bill was $2000.00.
+✅ Bill analysis written to session!
+PART 2: INTERACTIVE Q&A (Reading from Same Session)
+
+📋 Creating chatbot agent (will read from shared session)...
+✅ Chatbot created - connected to shared session!
+   💡 Chatbot can now see all the bill analysis results from the session!
+INTERACTIVE MODE
+You can now ask follow-up questions about the bill.
+The chatbot has access to ALL bill analysis results from the shared session!
+Type 'quit' or 'exit' to end the session.
+
+👤 Your question: What was the total amount on the bill?
+
+### Session: bill-analysis-session
+
+👤 User > What was the total amount on the bill?
+2025-12-01 16:59:53 - google_adk.google.adk.runners - WARNING - Event from an unknown agent: bill_summary_agent, event id: eac4c7cc-31dc-45e5-8845-138760867113
+2025-12-01 16:59:54 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 16:59:54 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 16:59:55 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 16:59:55 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+🤖 gemini-2.5-flash-lite > The total amount on the bill is $2000.00.
+
+👤 Your question: Were any duplicate charges found?
+
+### Session: bill-analysis-session
+
+👤 User > Were any duplicate charges found?
+2025-12-01 17:00:06 - google_adk.google.adk.models.google_llm - INFO - Sending out request, model: gemini-2.5-flash-lite, backend: GoogleLLMVariant.GEMINI_API, stream: False
+2025-12-01 17:00:06 - google_genai.models - INFO - AFC is enabled with max remote calls: 10.
+2025-12-01 17:00:07 - httpx - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent "HTTP/1.1 200 OK"
+2025-12-01 17:00:07 - google_adk.google.adk.models.google_llm - INFO - Response received from the model.
+🤖 gemini-2.5-flash-lite > Yes, duplicate charges were found. There are two charges for "Emergency Room Visit, Mod Severity" (CPT 99283) on 2023-10-15, each for $550.00. The duplicate audit identified a total duplicate amount of $1100.00.
+
+👤 Your question: exit
+👋 Goodbye!
+2025-12-01 17:00:12 - __main__ - INFO - ✅ Processing completed successfully
+
+Process finished with exit code 0
