@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 
 class AgentWrapper:
     """
-    Wrapper class for Google ADK agents (Agent, SequentialAgent, ParallelAgent).
+    Wrapper class for agents (Agent, SequentialAgent, ParallelAgent).
     Provides consistent interface and configuration.
     """
 
@@ -45,7 +45,7 @@ class AgentWrapper:
 
         Args:
             name: Agent name
-            model_name: Model name (required for Agent type)
+            model_name: Model name 
             description: Agent description
             instruction: System instruction for the agent
             tools: List of tools available to the agent
@@ -150,7 +150,6 @@ class AgentWrapper:
             logger.info(f"✅ Agent '{self.name}' created")
 
         # Use InMemoryRunner with run_debug for simple, stateless operations
-        # This avoids session management complexity while still working correctly
         self.runner = InMemoryRunner(agent=self.agent, app_name=self.app_name)
         logger.info(f"✅ InMemoryRunner created")
 
@@ -171,7 +170,6 @@ class AgentWrapper:
             raise RuntimeError("Runner not initialized.")
 
         # Use run_debug which handles everything automatically
-        # No session management needed - simpler and more reliable
         if isinstance(query, str):
             return await self.runner.run_debug(query)
         elif isinstance(query, types.Content):

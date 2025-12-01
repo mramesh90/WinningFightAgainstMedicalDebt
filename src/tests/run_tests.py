@@ -12,27 +12,22 @@ from pathlib import Path
 # Add src to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-# Import test modules
 from tests import test_main, test_integration
 
 
 def run_all_tests():
     """Run all test suites"""
 
-    print("=" * 80)
     print("MEDICAL BILL PROCESSING SYSTEM - TEST SUITE")
-    print("=" * 80)
     print()
 
     # Create test suite
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
 
-    # Add all tests from test_main
     print("Loading unit tests...")
     suite.addTests(loader.loadTestsFromModule(test_main))
 
-    # Add all tests from test_integration
     print("Loading integration tests...")
     suite.addTests(loader.loadTestsFromModule(test_integration))
 
@@ -45,9 +40,7 @@ def run_all_tests():
 
     # Print summary
     print()
-    print("=" * 80)
     print("TEST SUMMARY")
-    print("=" * 80)
     print(f"Tests run: {result.testsRun}")
     print(f"Successes: {result.testsRun - len(result.failures) - len(result.errors)}")
     print(f"Failures: {len(result.failures)}")

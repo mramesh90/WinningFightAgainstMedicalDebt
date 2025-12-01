@@ -29,7 +29,6 @@ class TestEndToEndWorkflow(unittest.IsolatedAsyncioTestCase):
     @classmethod
     def setUpClass(cls):
         """Set up test environment"""
-        # Ensure API key is set for tests
         if not os.getenv('GOOGLE_API_KEY'):
             os.environ['GOOGLE_API_KEY'] = 'test_key_for_structure_testing'
 
@@ -132,7 +131,6 @@ class TestEndToEndWorkflow(unittest.IsolatedAsyncioTestCase):
 
         orchestrator = MedicalBillOrchestrator()
 
-        # Create sample results (as main.py does when file not found)
         results = {
             "bill_file": "test_bill.pdf",
             "status": "COMPLETED",

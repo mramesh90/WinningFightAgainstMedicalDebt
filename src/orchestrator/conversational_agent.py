@@ -64,7 +64,6 @@ class ConversationalAgent:
             description=description
         )
 
-        # Create session service (use DatabaseSessionService for persistence)
         # SQLite database will be created automatically
         db_url = "sqlite+aiosqlite:///medical_bill_agent_data.db"
         from google.adk.sessions import DatabaseSessionService
@@ -108,7 +107,6 @@ class ConversationalAgent:
         # Get or create session for this user
         if session_id is None:
             if user_id not in self.sessions:
-                # Create session ID similar to reference example
                 self.sessions[user_id] = f"{self.name}_{user_id}_session"
                 logger.info(f"📝 Starting new conversation for user: {user_id}")
             session_id = self.sessions[user_id]
@@ -119,7 +117,6 @@ class ConversationalAgent:
         # Convert to Content object
         content = types.Content(role="user", parts=[types.Part(text=message)])
 
-        # Run with session - matching reference pattern
         # Runner.run_async with DatabaseSessionService will auto-create session
         response_generator = self.runner.run_async(
             user_id=user_id,
@@ -136,7 +133,7 @@ class ConversationalAgent:
 
     def reset_session(self, user_id: str = "default_user"):
         """
-        Clear the session for a user (start fresh conversation).
+        Clear the session for a user .
 
         Args:
             user_id: User identifier
@@ -146,7 +143,6 @@ class ConversationalAgent:
             logger.info(f"🔄 Session reset for user: {user_id}")
 
 
-# Example usage for medical bill follow-up questions
 class MedicalBillChatbot(ConversationalAgent):
     """
     Chatbot specifically for answering questions about medical bills.
@@ -166,12 +162,11 @@ class MedicalBillChatbot(ConversationalAgent):
                 "Be friendly, clear, and patient-focused."
             ),
             enable_compaction=True,
-            compaction_interval=5,  # Compact every 5 turns
-            overlap_size=2  # Keep 2 previous turns for context
+            compaction_interval=5,  
+            overlap_size=2  
         )
 
 
-# Example: How to use for follow-up questions
 async def example_usage():
     """
     Example showing how to use conversational agents for follow-up questions.

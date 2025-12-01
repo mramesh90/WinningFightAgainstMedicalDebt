@@ -31,7 +31,6 @@ MODEL_NAME = "gemini-2.5-flash-lite"
 async def run_session(runner_instance, user_queries, session_name, session_service):
     """
     Run a conversation session with the agent.
-    Matches the reference pattern exactly.
 
     Args:
         runner_instance: The Runner instance
@@ -79,10 +78,7 @@ async def main():
     # Setup logging
     setup_logging(log_level="INFO", log_to_file=True, log_dir="logs")
 
-    logger.info("=" * 80)
-    logger.info("MEDICAL BILL PROCESSING SYSTEM WITH SESSIONS")
-    logger.info("Using Google ADK Agents + DatabaseSessionService")
-    logger.info("=" * 80)
+    logger.info("MEDICAL BILL PROCESSING ")
 
     try:
         # Validate configuration
@@ -104,13 +100,9 @@ async def main():
         # ======================================================================
         # PART 1: PROCESS MEDICAL BILL (Writing to Shared Session)
         # ======================================================================
-        print("\n" + "=" * 80)
         print("PART 1: BILL PROCESSING (Writing to Session)")
-        print("=" * 80)
 
-        logger.info("\n" + "─" * 80)
         logger.info("INITIALIZING ORCHESTRATOR")
-        logger.info("─" * 80)
         orchestrator = MedicalBillOrchestrator()
 
         # Get bill file path
@@ -137,9 +129,7 @@ async def main():
             results = await orchestrator.process_bill(bill_file)
 
         # Print results
-        print("\n" + "=" * 80)
         print("BILL PROCESSING RESULTS")
-        print("=" * 80)
         print(f"\n📄 File: {results['bill_file']}")
         print(f"✅ Status: {results['status']}")
         print(f"\n📊 Stages Completed: {len(results['stages'])}")
@@ -148,9 +138,7 @@ async def main():
             print(f"   • {stage_name}: {stage_data['status']}")
 
         if 'final_output' in results:
-            print("\n" + "─" * 80)
             print("ANALYSIS OUTPUT")
-            print("─" * 80)
             print(results['final_output'])
 
         # ======================================================================
@@ -202,11 +190,9 @@ You can now answer any questions about this bill analysis."""
         print("✅ Bill analysis written to session!")
 
         # ======================================================================
-        # PART 2: INTERACTIVE Q&A (Reading from Shared Session)
+        # PART 2: INTERACTIVE Q&A 
         # ======================================================================
-        print("\n" + "=" * 80)
         print("PART 2: INTERACTIVE Q&A (Reading from Same Session)")
-        print("=" * 80)
 
         # Create chatbot that will read from the SAME session
         print("\n📋 Creating chatbot agent (will read from shared session)...")
@@ -221,9 +207,7 @@ You can now answer any questions about this bill analysis."""
         print("   💡 Chatbot can now see all the bill analysis results from the session!")
 
         # Ask follow-up questions - chatbot reads from SAME session!
-        print("\n" + "─" * 80)
         print("FOLLOW-UP QUESTIONS (Chatbot reads from shared session)")
-        print("─" * 80)
 
         await run_session(
             chatbot_runner,
@@ -237,13 +221,10 @@ You can now answer any questions about this bill analysis."""
         )
 
         # Interactive mode
-        print("\n" + "─" * 80)
         print("INTERACTIVE MODE")
-        print("─" * 80)
         print("You can now ask follow-up questions about the bill.")
         print("The chatbot has access to ALL bill analysis results from the shared session!")
         print("Type 'quit' or 'exit' to end the session.")
-        print("─" * 80)
 
         while True:
             try:

@@ -94,9 +94,7 @@ class GoverningAgent:
         """Print a formatted execution report."""
         report = self.generate_report()
 
-        print("\n" + "=" * 80)
         print("GOVERNING AGENT - WORKFLOW EXECUTION REPORT")
-        print("=" * 80)
         print(f"\n⏱️  Duration: {report.get('workflow_duration_seconds', 0):.2f} seconds")
         print(f"📊 Total Events: {report.get('total_events', 0)}")
         print(f"🤖 Agents Executed: {report.get('agents_executed', 0)}")
@@ -114,5 +112,4 @@ class GoverningAgent:
         for event in report.get('execution_timeline', [])[-10:]:  # Last 10 events
             print(f"   [{event['timestamp']}] {event['agent']}: {event['status']} {event['details']}")
 
-        print("\n" + "=" * 80 + "\n")
 

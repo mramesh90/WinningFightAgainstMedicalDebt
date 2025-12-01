@@ -2,7 +2,6 @@
 Schema definitions for medical bill data structures.
 """
 
-# Bill extraction schema for Gemini API
 BILL_SCHEMA = {
     "type": "OBJECT",
     "properties": {

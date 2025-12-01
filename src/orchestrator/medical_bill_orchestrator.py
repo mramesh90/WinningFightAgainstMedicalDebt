@@ -43,13 +43,13 @@ class MedicalBillOrchestrator:
         # Initialize Governing Agent
         self.governing_agent = GoverningAgent()
 
-        # Bill Extraction (uses genai client directly)
+        # Bill Extraction 
         self.bill_extractor = BillExtractionAgent()
 
-        # Charge Extraction (Google ADK Agent)
+        # Charge Extraction 
         self.charge_extractor = ChargeExtractionAgent()
 
-        # Auditor and Explainer Agents (Google ADK Agents)
+        # Auditor and Explainer Agents
         self.duplicate_auditor = DuplicateChargesAuditor()
         self.code_auditor = WrongCodesAuditor()
         self.charge_explainer = ChargeExplainer()
@@ -77,9 +77,7 @@ class MedicalBillOrchestrator:
         Returns:
             Complete processing results
         """
-        logger.info(f"\n{'='*80}")
         logger.info(f"🏥 STARTING MEDICAL BILL PROCESSING")
-        logger.info(f"{'='*80}\n")
         logger.info(f"📄 File: {bill_file_path}")
 
         self.governing_agent.start_workflow()
@@ -93,9 +91,7 @@ class MedicalBillOrchestrator:
         try:
             # ========== STAGE 1: Bill Extraction ==========
             self.governing_agent.log_agent_execution("BillExtraction", "STARTED")
-            logger.info("\n" + "─"*80)
             logger.info("STAGE 1: BILL EXTRACTION")
-            logger.info("─"*80)
 
             extracted_data = self.bill_extractor.extract(bill_file_path)
             results["stages"]["bill_extraction"] = {
@@ -106,9 +102,7 @@ class MedicalBillOrchestrator:
 
             # ========== STAGE 2: Charge Extraction ==========
             self.governing_agent.log_agent_execution("ChargeExtraction", "STARTED")
-            logger.info("\n" + "─"*80)
             logger.info("STAGE 2: CHARGE & CODE EXTRACTION")
-            logger.info("─"*80)
 
             charges_data = await self.charge_extractor.extract(extracted_data)
             results["stages"]["charge_extraction"] = {
@@ -118,9 +112,7 @@ class MedicalBillOrchestrator:
             self.governing_agent.log_agent_execution("ChargeExtraction", "SUCCESS")
 
             # ========== STAGE 3: Parallel Auditing & Explanation ==========
-            logger.info("\n" + "─"*80)
             logger.info("STAGE 3: PARALLEL AUDITING & EXPLANATION")
-            logger.info("─"*80)
             logger.info("🔀 Running 3 agents in parallel:")
             logger.info("   • Duplicate Charges Auditor")
             logger.info("   • Wrong Codes Auditor")
@@ -146,9 +138,7 @@ class MedicalBillOrchestrator:
             results["status"] = "COMPLETED"
             results["final_output"] = str(parallel_results)
 
-            logger.info("\n" + "="*80)
             logger.info("✅ BILL PROCESSING COMPLETED SUCCESSFULLY")
-            logger.info("="*80 + "\n")
 
         except Exception as e:
             logger.error(f"\n❌ BILL PROCESSING FAILED: {e}", exc_info=True)

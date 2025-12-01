@@ -56,8 +56,7 @@ class TestConfiguration(unittest.TestCase):
         test_path = r"C:\test\poppler\bin"
         os.environ['POPPLER_BIN_PATH'] = test_path
 
-        # Reload config (in real scenario, would reimport)
-        # For this test, just verify the pattern works
+       
         loaded_path = os.getenv('POPPLER_BIN_PATH', 'default')
         self.assertEqual(loaded_path, test_path)
 
@@ -72,7 +71,6 @@ class TestConfiguration(unittest.TestCase):
         """Test config validation when API key is set"""
         try:
             Config.validate()
-            # Should not raise
             self.assertTrue(True)
         except ValueError:
             self.fail("Config.validate() raised ValueError with API key set")
@@ -159,17 +157,12 @@ class TestOrchestrator(unittest.IsolatedAsyncioTestCase):
         """Test orchestrator handles missing bill file gracefully"""
         orchestrator = MedicalBillOrchestrator()
 
-        # Use a non-existent file path
         fake_path = Path("non_existent_bill.pdf")
 
-        # Should handle gracefully (returns results with error or sample data)
-        # Based on your code, it creates sample results
         try:
             results = await orchestrator.process_bill(fake_path)
-            # Should either return sample results or handle error
             self.assertIsInstance(results, dict)
         except Exception as e:
-            # If it raises, that's also acceptable behavior
             self.assertIsInstance(e, Exception)
 
 
@@ -249,7 +242,7 @@ class TestSharedSessionWorkflow(unittest.IsolatedAsyncioTestCase):
         APP_NAME = "test_app"
         USER_ID = "test_user"
 
-        # Create first agent (summary writer)
+        # Create first agent 
         summary_agent = LlmAgent(
             model=Gemini(model="gemini-2.5-flash-lite", retry_options=retry_config),
             name="summary_agent",
@@ -261,7 +254,7 @@ class TestSharedSessionWorkflow(unittest.IsolatedAsyncioTestCase):
             session_service=session_service
         )
 
-        # Create second agent (chatbot reader)
+        # Create second agent
         chatbot_agent = LlmAgent(
             model=Gemini(model="gemini-2.5-flash-lite", retry_options=retry_config),
             name="chatbot_agent",
