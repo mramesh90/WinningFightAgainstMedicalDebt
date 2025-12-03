@@ -8,7 +8,7 @@
 ## 🚀 Features
 
 ### Core Functionality
-- ✅ **Automated Bill Extraction** - Extracts data from PDF medical bills using OCR and text extraction
+- ✅ **Automated Bill Extraction** - Extracts data from PDF medical bills using text extraction
 - ✅ **Charge Analysis** - Identifies and structures all charges with CPT codes
 - ✅ **Duplicate Detection** - Finds duplicate charges automatically
 - ✅ **Code Validation** - Validates CPT codes and identifies deprecated/incorrect codes
@@ -356,9 +356,19 @@ WinningFightAgainstMedicalDebt-main/
         └── test_main.py               # Unit tests
 ```
 
+### Improvements Continued.. / Continous Learning:
+-   Use Model Context Protocol and Evaluation
+-   Deploy the Agents - to learn further steps in the end-to-end phase
+-   Organize prompts in separate folder for better managing
+-   Implement Web Interface with file uploader to give better UX
+-   Externalize all configurable parameters outside the design/solution
+-   Implement solution to perform a check to use the existing local persistent caching to reduce cost of using LLM for similar inputs in future
+-   Define DoD, continuously and systematically improvise Agent quality and maturity
+
 
 
 ---
+
 
 
 
